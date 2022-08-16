@@ -6,6 +6,7 @@ SELECT *
 FROM customers
 
 /添加筛选条件：WHERE，添加排序依据：ORDER BY/
+
 SELECT *
 FROM customers
 WHERE customers_id = 1
@@ -15,6 +16,7 @@ FROM customers
 ORDER BY first_name
 
 /从某一table中调用数据，并对数据进行运算, 用AS定义新变量/
+
 SELECT
   last_name
   first_name
@@ -22,10 +24,11 @@ SELECT
   points * 10 + 100 AS ‘discount_factor'
  
 /用DISTINCT去除重复的州/
+
 SELECT DISTINCT state
 FROM customers
 
---课后练习
+--  课后练习
 --  Return all the products
 --  name
 --  Unit price
@@ -37,3 +40,52 @@ SELECT
   Unit price * 1.1 AS New price
 From products
   
+-- WHERE子句
+-- 数值查询可用 > < >= <= <> !=等符号
+/查询积分大于3000的顾客/
+
+SELECT *
+FROM customers
+WHERE points > 3000
+
+/查询所在州为VA的顾客/
+
+SELECT *
+FROM customers
+WHERE state = 'VA'
+
+/查询在1990年后出生的顾客/
+
+SELECT *
+FROM customers
+WHERE birth_date > '1990-01-01'
+
+--  课后练习
+--  Get the orders placed this year
+
+SELECT *
+FROM sql_store.orders
+WHERE order_date > '2019-01-01'
+
+--  AND,OR,NOT运算符
+-- 搭配WHERE语句使用
+/查询1990年后出生或积分大于1000的顾客/
+
+SELECT *
+FROM sql_store.customers
+WHERE birth_date > '1990-01-01' OR points > 1000
+
+/查询1990年后出生或积分大于1000且在VA居住的顾客/
+
+SELECT *
+FROM sql_store.customers
+WHERE birth_date > '1990-01-01' OR (points > 1000 AND state = 'VA')
+
+--  课后练习
+--  From the order_items table, get the items
+--    for order #6
+--    where the total price is greater than 30
+
+SELECT *
+FROM sql_store.order_items
+WHERE order_id = 6 AND quantity * unit_price > 30
