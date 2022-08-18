@@ -89,3 +89,115 @@ WHERE birth_date > '1990-01-01' OR (points > 1000 AND state = 'VA')
 SELECT *
 FROM sql_store.order_items
 WHERE order_id = 6 AND quantity * unit_price > 30
+
+-- IN运算符
+-- 条件筛选，筛选出居住在CO和VA的顾客
+
+SELECT * 
+FROM customers
+WHERE state in ('VA','CO')
+
+-- 课后练习
+-- Return products with
+--   quantity in stock equal to 49, 38 ,72
+
+SELECT *
+FROM products
+WHERE quantity_in_stock IN (49, 38, 72)
+
+-- BETWEEN运算符
+-- 筛选points在（1000，3000）的顾客
+
+SELECT *
+FROM customers
+WHERE points BETWEEN 1000 AND 3000
+
+--  课后练习
+--  选出出生日期在1990年到2000年的顾客
+SELECT *
+FROM customers
+WHERE birth_date BETWEEN 1990-01-01 AND 2000-01-01
+
+--  LIKE运算符
+--  模糊搜索
+--  % any number of characters
+--  _ single character
+--  筛选Y开头的顾客的数据
+
+SELECT *
+FROM customers
+WHERE name LIKE 'y%'
+
+--  下划线表示字符，通过下划线可指定字符数
+--  筛选名字字符数为6，开头为y的顾客
+
+SELECT *
+FROM customers
+WHERE name LIKE 'y_____'
+
+--  练习
+--  Get the customers whose
+--    addresses contain TRAIL or AVENUE
+--    phone numbers end with 9
+
+SELECT *
+FROM world
+WHERE address LIKE '%TRAIL%' OR
+address LIKE '%AVENUE%'
+
+SELECT *
+FROM world
+WHERE phone numbers LIKE '%9"
+
+-- 正则表达式REGEXP
+-- ^ beginning
+-- $ end
+-- | logigal or 
+-- [abcd]
+-- [a-f]
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'e'
+
+--  练习
+--  Get the customers whose
+--    first names are ELKA or AMBUR
+--    last names end with EY or ON
+--    last names start with MY or contains SE
+--    last names contain B followed by R or U
+
+SELECT *
+FROM customers
+WHERE first_name REGEXP 'ELKA|AMBUR' OR
+last_name REGEXP 'EY$|ON$|^MY|^SE|B[RU]'
+
+--  IS NULL运算符
+--  筛选有缺失值的项，亦可以使用IS NOT NULL来反选
+
+SELECT *
+FROM customer
+WHERE phone IS NULL
+
+--  ORDER BY运算符
+--  排序 在变量后加DESCEND为倒序
+
+SELECT *
+FROM order_items
+WHERE order_id=2
+ORDER BY product_id
+
+--  LIMIT子句
+--  限定语句执行结果的偏移量，只有一个参数时限定返回列数，两个参数时第一个参数指偏移量，第二个参数指偏移后返回的行数
+--  筛选搜索数据第4，5，6行
+
+SELECT *
+FROM customers
+LIMIT 3,3
+
+--  练习
+--  Get the top three loyal customers
+SELECT *
+FROM customers
+ORDER BY points DESC
+LIMIT 3
