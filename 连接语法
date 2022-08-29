@@ -1,0 +1,48 @@
+-- 内连接 INNER JOIN
+-- 等同连接，返回的结果集是两个表中所有相匹配的数据，而舍弃不匹配的数据
+-- 将order_items与products相连接，查询order_id, product_id, quantity, unit_price
+-- 注意产品ID和单价输出的是oi表的
+
+USE sql_store
+SELECT order_id, order_items.product_id, quantity, order_items.unit_price
+FROM sql_store.order_items
+JOIN products
+ON order_items.product_id = products.product_id
+
+-- 跨数据库连接 Joining Across Table
+-- 跟上述差异不大，差别在于在JOIN后注意添加数据库前缀
+
+-- 自连接 Self Joins
+-- 使用自连接可以将自身表的一个镜像当作另一个表来对待，从而能够得到一些特殊的数据。一般用于数据分类
+-- 同一张表已知员工的reports_to的ID，补充汇报人的个人信息
+
+USE sql_hr;
+
+SELECT *
+FROM employees e
+JOIN employees m
+ON e.reports_to = m.employee_id
+
+-- 多表连接
+-- 跟上述连接无太大差异，在表与表连接后再加一个JOIN即可
+-- 在orders表的基础上补充顾客信息和货物状态
+
+USE sql_store;
+
+SELECT *
+FROM orders
+JOIN customers
+ON orders.customer_id = customers.customer_id
+JOIN order_statuses
+ON orders.status = order_statuses.order_status_id
+
+-- 将clients, payments, payment methods三表连接，补全信息
+
+USE sql_invoicing;
+
+SELECT *
+FROM clients
+JOIN payments
+ON clients.client_id = payments.client_id
+JOIN payment_methods
+ON payments.payment_method = payment_methods.payment_method_id
